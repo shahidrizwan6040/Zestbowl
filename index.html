@@ -1,0 +1,152 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ZestBowl - Fresh and Healthy Fruit Bowls in CKB Layout, Marathahalli, Bangalore. Order now for a delicious experience!">
+  <meta name="keywords" content="ZestBowl, fruit bowls, healthy food, Marathahalli, Bangalore, fresh fruits, organic bowls">
+  <meta name="author" content="ZestBowl">
+  <title>ZestBowl - Fresh Fruit Bowls in Bangalore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-yellow-100 to-orange-100 font-sans">
+  <!-- Header Section -->
+  <header class="bg-orange-500 text-white py-4 sticky top-0 shadow-md">
+    <div class="container mx-auto flex justify-between items-center px-4">
+      <!-- Logo -->
+      <div class="flex items-center space-x-2">
+        <span class="text-3xl font-bold">ZestBowl</span>
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm-6 6c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2zm12 0c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2z"></path>
+        </svg>
+      </div>
+      <!-- Navigation -->
+      <nav>
+        <ul class="flex space-x-6">
+          <li><a href="#home" class="hover:underline">Home</a></li>
+          <li><a href="#menu" class="hover:underline">Menu</a></li>
+          <li><a href="#order" class="hover:underline">Order</a></li>
+          <li><a href="#contact" class="hover:underline">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="py-16 text-center">
+    <div class="container mx-auto px-4">
+      <h1 class="text-5xl font-bold text-orange-600 mb-4">Welcome to ZestBowl!</h1>
+      <p class="text-xl text-gray-700 mb-6">Fresh, Healthy, and Delicious Fruit Bowls in CKB Layout, Marathahalli, Bangalore!</p>
+      <a href="#order" class="bg-orange-500 text-white py-3 px-6 rounded-full hover:bg-orange-600">Order Now</a>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center text-orange-600 mb-8">Our Menu</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Menu Item 1 -->
+        <div class="bg-orange-100 p-6 rounded-lg shadow-md text-center">
+          <h3 class="text-2xl font-semibold text-gray-800">Classic Fruit Bowl</h3>
+          <p class="text-gray-600 mt-2">Watermelon, Pineapple, Banana, Grapes</p>
+          <p class="text-orange-600 font-bold mt-2">₹79</p>
+        </div>
+        <!-- Menu Item 2 -->
+        <div class="bg-orange-100 p-6 rounded-lg shadow-md text-center">
+          <h3 class="text-2xl font-semibold text-gray-800">Tropical Delight</h3>
+          <p class="text-gray-600 mt-2">Papaya, Muskmelon, Guava, Sprouts</p>
+          <p class="text-orange-600 font-bold mt-2">₹99</p>
+        </div>
+        <!-- Menu Item 3 -->
+        <div class="bg-orange-100 p-6 rounded-lg shadow-md text-center">
+          <h3 class="text-2xl font-semibold text-gray-800">Veggie Crunch Bowl</h3>
+          <p class="text-gray-600 mt-2">Cucumber, Carrot, Sweetcorn, Peanuts</p>
+          <p class="text-orange-600 font-bold mt-2">₹130</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Order Section -->
+  <section id="order" class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center text-orange-600 mb-8">Place Your Order</h2>
+      <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md">
+        <div>
+          <div class="mb-4">
+            <label for="name" class="block text-gray-700 font-semibold">Name</label>
+            <input type="text" id="name" class="w-full p-3 border rounded-lg" placeholder="Enter your name" required>
+          </div>
+          <div class="mb-4">
+            <label for="phone" class="block text-gray-700 font-semibold">Phone Number</label>
+            <input type="tel" id="phone" class="w-full p-3 border rounded-lg" placeholder="Enter your phone number" required>
+          </div>
+          <div class="mb-4">
+            <label for="bowl" class="block text-gray-700 font-semibold">Select Bowl</label>
+            <select id="bowl" class="w-full p-3 border rounded-lg" required>
+              <option value="" disabled selected>Select a bowl</option>
+              <option value="Classic Fruit Bowl">Classic Fruit Bowl - ₹79</option>
+              <option value="Tropical Delight">Tropical Delight - ₹99</option>
+              <option value="Veggie Crunch Bowl">Veggie Crunch Bowl - ₹130</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label for="address" class="block text-gray-700 font-semibold">Delivery Address</label>
+            <textarea id="address" class="w-full p-3 border rounded-lg" placeholder="Enter your delivery address" required></textarea>
+          </div>
+          <button onclick="alert('Order placed! Please make payment via UPI to zestbowl@upi and we will confirm your order.')" class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">Place Order</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-16 bg-orange-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center text-orange-600 mb-8">Contact Us</h2>
+      <div class="text-center">
+        <p class="text-lg text-gray-700 mb-2"><strong>Location:</strong> CKB Layout, Marathahalli, Bangalore - 560037</p>
+        <p class="text-lg text-gray-700 mb-2"><strong>Phone:</strong> +91 98765 43210</p>
+        <p class="text-lg text-gray-700 mb-2"><strong>Email:</strong> zestbowl@gmail.com</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-orange-500 text-white py-4">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2025 ZestBowl. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
